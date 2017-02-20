@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Slides controlled by Potentiometer and Arduino</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		<style>
+			#content {
+				color:#fff;
+				background:#000;
+				position:fixed; 
+				top 40px;
+				padding:20px;
+			}
+		</style>
+	</head>
+
+	<body onload="setInterval(refresh, 4000);">
+		<div id="content">waiting for Arduino value...</div>
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Chapter I</h1>
+					<h3>Subtitle</h3>
+					<p>Some Text</p>
+				</section>
+
+				<section>
+					<h2>Chapter II</h2>
+					<h3>Subtitle</h3>
+					<p>Some Text</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+			});
+
+		</script>
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+    	<script type="text/javascript">
+        function refresh() {
+            $('#content').load('/arduino/value');
+            var value = $('#content').text();
+            var potPosition = parseInt(value);
+            if (potPosition >= 500) {
+            	Reveal.next();
+            }
+            else if(potPosition <= 100) {
+            	Reveal.prev();
+            }
+        }
+   		</script>
+	</body>
+</html>
